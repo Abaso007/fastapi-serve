@@ -61,10 +61,8 @@ class FastAPIServeGateway(FastAPIBaseGateway):
 
         if self.cors:
             if any(
-                [
-                    isinstance(middleware, CORSMiddleware)
-                    for middleware in self._app.user_middleware
-                ]
+                isinstance(middleware, CORSMiddleware)
+                for middleware in self._app.user_middleware
             ):
                 self.logger.warning("CORS is already enabled")
                 return

@@ -65,8 +65,7 @@ class JinaAuthMiddleware(JinaAuthBase, BaseHTTPMiddleware):
             await self.validate_request(request)
         except HTTPException as e:
             return JSONResponse(status_code=e.status_code, content={'detail': e.detail})
-        response = await call_next(request)
-        return response
+        return await call_next(request)
 
 
 JinaAPIKeyHeader = APIKeyHeader(name="Authorization", auto_error=False)

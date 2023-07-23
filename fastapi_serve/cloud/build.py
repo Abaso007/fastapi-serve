@@ -211,10 +211,7 @@ def _push_to_hubble(
         args_list.remove('--no-usage')
         args_list.append('--verbose')
     if not public:
-        args_list.append('--secret')
-        args_list.append(secret)
-        args_list.append('--private')
-
+        args_list.extend(('--secret', secret, '--private'))
     args = set_hub_push_parser().parse_args(args_list)
 
     if platform:
@@ -228,7 +225,7 @@ def _push_to_hubble(
     )
     with EnvironmentVarCtxtManager(push_envs):
         gateway_id = HubIO(args).push().get('id')
-        return gateway_id + ':' + tag
+        return f'{gateway_id}:{tag}'
 
 
 def push_app_to_hubble(

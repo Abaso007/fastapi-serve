@@ -5,7 +5,7 @@ import requests
 from hubble import Auth
 
 HubbleAPI = "https://api.hubble.jina.ai/v2/rpc/"
-HubbleGetUserAPI = HubbleAPI + "user.session.getUser"
+HubbleGetUserAPI = f"{HubbleAPI}user.session.getUser"
 FlowUserEnvVar = "JINA_FLOW_USER_ID"
 
 

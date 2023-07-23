@@ -64,7 +64,7 @@ async def export_app(
         f.to_kubernetes_yaml(path)
     elif kind == ExportKind.DOCKER_COMPOSE:
         _path = Path(path)
-        if _path.is_file() and _path.suffix in ['.yml', '.yaml']:
+        if _path.is_file() and _path.suffix in {'.yml', '.yaml'}:
             f.to_docker_compose_yaml(path)
         elif _path.is_dir():
             f.to_docker_compose_yaml(os.path.join(path, 'docker-compose.yml'))
