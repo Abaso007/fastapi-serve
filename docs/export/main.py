@@ -24,10 +24,7 @@ async def resize_image(file: UploadFile = File(...), max_size: int = 500):
 
 @app.get("/list/")
 async def list():
-    resized_images = []
-    for f in os.listdir():
-        if f.startswith("resized_"):
-            resized_images.append(f)
+    resized_images = [f for f in os.listdir() if f.startswith("resized_")]
     return {"resized_images": resized_images}
 
 

@@ -109,13 +109,9 @@ def get_flow_dict(
     if jcloud:
         jcloud_config = get_jcloud_config(config_path=jcloud_config_path)
 
-    _envs = {}
-    if env is not None:
-        # read env file and load to _envs dict
-        _envs = dict(dotenv_values(env))
-
+    _envs = dict(dotenv_values(env)) if env is not None else {}
     # add userid to _envs dict
-    _envs.update({FlowUserEnvVar: get_jina_userid()})
+    _envs[FlowUserEnvVar] = get_jina_userid()
 
     uses = get_gateway_uses(id=gateway_id) if jcloud else get_gateway_config_yaml_path()
     flow_dict = {
@@ -199,7 +195,7 @@ async def deploy_app_on_jcloud(
                 await jcloud_flow.update()
 
         for k, v in jcloud_flow.endpoints.items():
-            if k.lower() == 'gateway (http)' or k.lower() == 'gateway (websocket)':
+            if k.lower() in ['gateway (http)', 'gateway (websocket)']:
                 return app_id, v
 
     return None, None
@@ -312,7 +308,7 @@ async def list_apps_on_jcloud(phase: str, name: str):
     )
 
     console = Console()
-    with console.status(f'[bold]Listing all apps'):
+    with console.status('[bold]Listing all apps'):
         all_apps = await CloudFlow().list_all(
             phase=phase, name=name, labels=f'app={DEFAULT_LABEL}'
         )

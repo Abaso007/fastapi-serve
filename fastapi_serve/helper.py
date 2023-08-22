@@ -27,11 +27,11 @@ def syncify(f):
 
 
 def get_random_name():
-    return 'f-' + uuid.uuid4().hex[:6]
+    return f'f-{uuid.uuid4().hex[:6]}'
 
 
 def get_random_tag():
-    return 't-' + uuid.uuid4().hex[:5]
+    return f't-{uuid.uuid4().hex[:5]}'
 
 
 def get_or_create_eventloop():

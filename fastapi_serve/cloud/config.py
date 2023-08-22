@@ -241,8 +241,7 @@ def get_jcloud_config(config_path: str = None) -> JCloudConfig:
         return JCloudConfig()
 
     with open(config_path, 'r') as f:
-        config_data: Dict = yaml.safe_load(f)
-        if not config_data:
+        if config_data := yaml.safe_load(f):
+            return JCloudConfig.from_dict(config_data)
+        else:
             return JCloudConfig()
-
-        return JCloudConfig.from_dict(config_data)
